@@ -1,10 +1,6 @@
 # coding: utf-8
 
-import clipboard, console, requests, ui, urlparse, zipfile, re, os, string
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO  import StringIO
+import clipboard, console, requests, ui, urllib.parse, zipfile, re, os, string, io
 
 class Delegate (object):
     def __init__(self):
@@ -188,7 +184,8 @@ def segchange(sender):
 view = ui.load_view('gitrepo')
 for name in 'username reponame'.split():
     view[name].autocapitalization_type = ui.AUTOCAPITALIZE_NONE
-parse = urlparse.urlparse(clipboard.get().strip())
+#parse = urllib.parse(clipboard.get().strip())
+parse = urllib.parse.urlparse(clipboard.get().strip())
 if parse.netloc in "www.github.com github.com".split():
     path = [i for i in parse.path.split("/") if i]
     if len(path) >= 2:
