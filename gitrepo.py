@@ -1,6 +1,10 @@
 # coding: utf-8
 
-import clipboard, console, requests, ui, urllib.parse, zipfile, re, os, string, io
+import clipboard, console, requests, ui, urllib.parse, zipfile, re, os, string
+try:
+	from StringIO import StringIO
+except ImportError:
+		from io import StringIO
 
 class Delegate (object):
     def __init__(self):
@@ -25,8 +29,8 @@ def get_page_num(link_header):
 @ui.in_background
 def save_zip(data, name, unzip):
     if unzip:
-        io = StringIO(data)
-        with zipfile.ZipFile(io) as zp:
+        ios = io.BytesIO(data)
+        with zipfile.ZipFile(ios) as zp:
             zp.extractall()
     else:
         with open(name + ".zip", "wb") as zp:
